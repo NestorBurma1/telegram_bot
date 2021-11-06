@@ -44,7 +44,9 @@ void dispose() {
   _controller.dispose();
   dispose();
 }
-int _value = 1;
+
+int _value = 0;
+
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
@@ -84,24 +86,28 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               icon: const Icon(Icons.play_arrow),
             ),
-            Center(child:
-              Column(
-
+            Center(
+              child: Column(
                 children: <Widget>[
-                  for (int i = 0; i <ChatId.MapChatId.length; i++)
+                  for (int i = 0; i < ChatId.MapChatId.length; i++)
                     ListTile(
                       title: Text(
                         ChatId.MapChatId.keys.elementAt(i),
-                        style: Theme.of(context).textTheme.subtitle1!.copyWith(color: i == ChatId.MapChatId.length ? Colors.black38 :  Colors.green),
+                        style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                            color: i == ChatId.MapChatId.length
+                                ? Colors.black38
+                                : Colors.green),
                       ),
                       leading: Radio(
                         value: i,
                         groupValue: _value,
-                        onChanged: i == ChatId.MapChatId.length ? null : (int? value) {
-                          setState(() {
-                            _value = value!;
-                          });
-                        },
+                        onChanged: i == ChatId.MapChatId.length
+                            ? null
+                            : (int? value) {
+                                setState(() {
+                                  _value = value!;
+                                });
+                              },
                       ),
                     ),
                 ],
@@ -112,8 +118,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 width: 500,
                 child: TextField(
                   controller: _controller,
-                  onSubmitted: (String value) async =>
-                      await TelegramApi().postRequest('216464543', 'rsr'),
+                  onSubmitted: (String value) async => await TelegramApi()
+                      .postRequest(
+                          ChatId.MapChatId.values.elementAt(_value), value),
                 ),
               ),
             ),
