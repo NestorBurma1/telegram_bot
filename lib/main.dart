@@ -86,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Center(child:
               Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+
                 children: <Widget>[
                   for (int i = 0; i <ChatId.MapChatId.length; i++)
                     ListTile(
@@ -113,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: TextField(
                   controller: _controller,
                   onSubmitted: (String value) async =>
-                      await TelegramApi().postRequest('216464543', value),
+                      await TelegramApi().postRequest('216464543', 'rsr'),
                 ),
               ),
             ),
