@@ -2,20 +2,25 @@ import 'package:telegram_bot/data/api/user_entity_api.dart';
 import 'package:telegram_bot/domain/user_entity.dart';
 
 class UserEntityMapper {
-  static UserEntity fromApi(UserEntityApi userEntityApi) {
-    return UserEntity(
-      userName: userEntityApi.userName,
-      paymentName: userEntityApi.paymentName,
-      paymentDate: UserEntityHelper.stringToDate(userEntityApi.paymentDate),
-      lastSubscriptionDate:
-          UserEntityHelper.stringToDate(userEntityApi.paymentDate),
-      telegramNick: userEntityApi.telegramNick,
-      botChatId: userEntityApi.botChatId,
-      email: userEntityApi.email,
-      phone: userEntityApi.phone,
-      contract: userEntityApi.contract,
-      contractDate: UserEntityHelper.stringToDate(userEntityApi.contractDate),
-      lastPaymentSum: userEntityApi.lastPaymentSum,
-    );
+  static List<UserEntity> fromAPi({List<UserEntityApi>? listApiTable}) {
+    List<UserEntity> _listUserEntity = [];
+    listApiTable!.forEach((element) {
+      _listUserEntity.add(
+          UserEntity(
+            userName: element.userName,
+            paymentName: element.paymentName,
+            paymentDate: UserEntityHelper.stringToDate(element.paymentDate),
+            lastSubscriptionDate:
+            UserEntityHelper.stringToDate(element.paymentDate),
+            telegramNick: element.telegramNick,
+            botChatId: element.botChatId,
+            email: element.email,
+            phone: element.phone,
+            contract: element.contract,
+            contractDate: UserEntityHelper.stringToDate(element.contractDate),
+            lastPaymentSum: element.lastPaymentSum,
+          ));
+    });
+    return _listUserEntity;
   }
 }

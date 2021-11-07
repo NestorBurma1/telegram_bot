@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:logger/logger.dart';
 
 part 'user_entity.freezed.dart';
 
@@ -21,6 +22,14 @@ class UserEntity with _$UserEntity {
 
 class UserEntityHelper {
   static stringToDate(String? stringDate) {
-    return DateTime.parse(stringDate ??= '').toLocal();
+    var logger = Logger(
+      filter: null, // Use the default LogFilter (-> only log in debug mode)
+      printer: PrettyPrinter(), // Use the PrettyPrinter to format and print log
+      output: null, // Use the default LogOutput (-> send everything to console)
+    );
+    return logger.d(DateTime.parse(
+            stringDate! == '' ? '2000-00-04T22:00:00.000Z'//1999-12-05 00:00:00.000 or no date
+                : stringDate)
+        .toLocal());
   }
 }

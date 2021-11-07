@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 import 'package:telegram_bot/data/api/user_entity_api.dart';
+import 'package:telegram_bot/data/services/google_sheet_api_key.dart';
 
 class GetUserServiceApi {
   var logger = Logger(
@@ -14,10 +15,10 @@ class GetUserServiceApi {
   //getTable can get all tables for GoogleSheetApi or you can set need tables length from latest.
   //For example if need first table we need to set tablesLength = 1, if do not set tablesLength get table will get all table
   Future<List<UserEntityApi>> getTable(
-    String apiKey,
+
   ) async {
     final dio = Dio();
-    final response = await dio.get(_basedUrl + apiKey);
+    final response = await dio.get(_basedUrl + GoogleSheepApiKey.key);
     List<dynamic> responseMap = [];
     if (response.data != null) {
       responseMap = response.data;
@@ -25,7 +26,6 @@ class GetUserServiceApi {
     List<UserEntityApi> _listApiUsers = [];
     for (int i = 0; i < responseMap.length; i++) {
       try {
-        // logger.d(UserEntityApi.fromApi(responseMap[i]));
         _listApiUsers.add(UserEntityApi.fromApi(responseMap[i]));
       } catch (e) {
         logger.e(e);

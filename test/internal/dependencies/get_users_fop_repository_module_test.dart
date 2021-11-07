@@ -1,10 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:logger/logger.dart';
 import 'package:telegram_bot/data/api/user_entity_api.dart';
-import 'package:telegram_bot/data/services/get_user_service_api.dart';
-import 'package:telegram_bot/data/services/google_sheet_api_key.dart';
+import 'package:telegram_bot/domain/user_entity.dart';
+import 'package:telegram_bot/internal/dependencies/get_users_fop_repository_module.dart';
 
-import 'expected_list_user_api.dart';
+import '../../api/services/expected_list_user_api.dart';
 
 void main() {
   var logger = Logger(
@@ -16,15 +16,15 @@ void main() {
     Map<String, String> expectedMapFirst= ExpectedListUserApi.list.elementAt(0);
     Map<String, String> expectedMapLast= ExpectedListUserApi.list.elementAt(1);
 
-    GetUserServiceApi getUserServiceApi = GetUserServiceApi();
+
     test('get first user', () async {
-      List<UserEntityApi> list =
-          await getUserServiceApi.getTable();
+      List<UserEntity> list =
+      await GetUsersFopRepositoryModule.getUsersFopRepository().getUsersFop();
       expect(list[0].paymentName, expectedMapFirst['paymentName']);
     });
     test('get first user', () async {
-      List<UserEntityApi> list =
-      await getUserServiceApi.getTable();
+      List<UserEntity> list =
+      await GetUsersFopRepositoryModule.getUsersFopRepository().getUsersFop();
       expect(list[63].paymentName, expectedMapLast['paymentName']);
     });
   });
