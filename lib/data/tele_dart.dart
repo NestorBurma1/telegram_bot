@@ -7,7 +7,7 @@ import 'package:teledart/model.dart';
 import 'package:telegram_bot/data/token.dart';
 
 class TelegramBot {
-  Future<void> main() async {
+ static Future<void> comand() async {
     final envVars = Platform.environment;
 
     var telegram = Telegram(envVars[Token.agroMarketUkraineBot]!);

@@ -19,6 +19,7 @@ class TelegramApi {
       };
     }
   }
+  //telegram send message with chat_id
   Future<Map<String, dynamic>> postRequest(String chaId, String message) async {
     Uri url = Uri.parse(
         'https://api.telegram.org/bot${Token.agroMarketUkraineBot}/sendmessage');
