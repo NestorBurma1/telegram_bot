@@ -7,4 +7,4 @@ Project uses only pure Telegram API for sending messages without any libraries.s
 
 Telegram sendMessage by chat_id you will find:
 
-lib/data/services/send_message_telegram.dart
+https:/github.com/NestorBurma1/telegram_bot/blob/master/lib/data/services/send_message_telegram.dart
