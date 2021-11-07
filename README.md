@@ -5,6 +5,6 @@ from google sheet API and send messages by chat_id when subscription date expire
 
 Project uses only pure Telegram API for sending messages without any libraries.subscription
 
-Telegram sendMessage by chat_id you will find:
+Telegram sendMessage by chat_id you will find with link below:
 
-https:/github.com/NestorBurma1/telegram_bot/blob/master/lib/data/services/send_message_telegram.dart
+- [Telegram sendMessage by chat_id services](https:/github.com/NestorBurma1/telegram_bot/blob/master/lib/data/services/send_message_telegram.dart)
