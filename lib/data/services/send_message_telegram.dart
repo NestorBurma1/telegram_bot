@@ -7,7 +7,7 @@ class TelegramApi {
 
   Future<void> sendMessage(String message, String id) async {
     Uri url = Uri.parse(
-        'https://api.telegram.org/bot${Token.agroMarketUkraineBot}/sendmessage?chat_id=-216464543&text=OLEKSII20FFJJFHF');
+        'https://api.telegram.org/bot${Token.agroMarketUkraineBot}/sendmessage?chat_id=-$id&text=OLEKSII20FFJJFHF');
     final response = await http.post(url, headers: <String, String>{
       'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
     },body: 'OLEKSII');
