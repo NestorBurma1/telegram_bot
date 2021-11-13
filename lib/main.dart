@@ -4,9 +4,9 @@ import 'package:telegram_bot/bloc/get_users_fop_cubit.dart';
 
 import 'package:telegram_bot/presentation/home_page.dart';
 
-void main() async {
+void main() {
   final GetUsersFopCubit _getUsersFopCubit = GetUsersFopCubit();
-  await _getUsersFopCubit.emitGetUsers();
+   _getUsersFopCubit.emitGetUsers();
   runApp(MyApp(getUsersFopCubit: _getUsersFopCubit));
 }
 

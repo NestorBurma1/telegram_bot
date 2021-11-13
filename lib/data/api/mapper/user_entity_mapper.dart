@@ -11,7 +11,7 @@ class UserEntityMapper {
             paymentName: element.paymentName,
             paymentDate: UserEntityHelper.stringToDate(element.paymentDate),
             lastSubscriptionDate:
-            UserEntityHelper.stringToDate(element.paymentDate),
+            UserEntityHelper.stringToDate(element.lastSubscriptionDate),
             telegramNick: element.telegramNick,
             botChatId: element.botChatId,
             email: element.email,

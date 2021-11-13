@@ -21,8 +21,6 @@ void dispose() {
   dispose();
 }
 
-int _value = 0;
-
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
@@ -46,49 +44,81 @@ class _MyHomePageState extends State<MyHomePage> {
                       return (const CircularProgressIndicator());
                     } else if (state is GetUsersFopLoaded) {
                       List<UserEntity> _listUserEntity = state.listUsersEntity;
-                      return Container(
-                        height: MediaQuery.of(context).size.height-100,
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: <Widget>[
-                              for (int i = 0; i < _listUserEntity.length; i++)
-                                ListTile(
-                                  title: Text(
-                                    _listUserEntity[i].userName!,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .subtitle1!
-                                        .copyWith(
-                                            color: i == _listUserEntity.length
-                                                ? Colors.black38
-                                                : Colors.green),
-                                  ),
-                                  leading: Radio(
-                                    value: i,
-                                    groupValue: _value,
-                                    onChanged: i == _listUserEntity.length
-                                        ? null
-                                        : (int? value) {
-                                            setState(() {
-                                              _value = value!;
-                                            });
-                                          },
-                                  ),
-                                ),
-                              Center(
+                      return SizedBox(
+                        width: MediaQuery.of(context).size.width - 100,
+                        height: MediaQuery.of(context).size.height - 100,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex :1,
+                              child: ListView.builder(
+                                itemCount: _listUserEntity.length,
+                                itemBuilder: (BuildContext context, int i) {
+                                  return SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width - 100,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          _listUserEntity[i].userName!,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle1!
+                                              .copyWith(color: Colors.green),
+                                        ),
+                                        Text(
+                                          _listUserEntity[i]
+                                              .lastSubscriptionDate
+                                              .toString(),
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Center(
                                 child: SizedBox(
                                   width: 500,
-                                  child: TextField(
-                                    controller: _controller,
-                                    onSubmitted: (String value) async =>
-                                        await TelegramApi().postRequest(
-                                            _listUserEntity[_value].botChatId!,
-                                            value),
+                                  child: Column(
+                                    mainAxisAlignment:  MainAxisAlignment.center,
+                                    children: [
+                                      const Text('Type your message here'),
+                                      TextField(
+                                        controller: _controller,
+                                      ),
+                                      const SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      Container(
+                                        color: Colors.green,
+                                        child: TextButton(
+                                            child: const Text(
+                                              'Send message',
+                                              style:
+                                                  TextStyle(color: Colors.white),
+                                            ),
+                                            onPressed: () async => {
+                                                  if (_controller.text.isNotEmpty)
+                                                    {
+                                                      await TelegramApi()
+                                                          .postRequest(
+                                                              _listUserEntity[0]
+                                                                  .botChatId!,
+                                                              _controller.text)
+                                                    }
+                                                }),
+                                      )
+                                    ],
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       );
                     } else {

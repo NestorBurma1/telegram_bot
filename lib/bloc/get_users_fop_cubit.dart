@@ -14,7 +14,7 @@ var logger = Logger(
 );
 
 class GetUsersFopCubit extends Cubit<GetUsersFopState> {
-  GetUsersFopCubit() : super(GetUsersFopInitial());
+  GetUsersFopCubit() : super(const GetUsersFopLoading());
 
 
 
