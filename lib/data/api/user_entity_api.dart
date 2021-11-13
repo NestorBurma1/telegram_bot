@@ -18,7 +18,7 @@ class UserEntityApi {
         paymentDate = map['paymentDate'] ??= '',
         lastSubscriptionDate = map['lastSubscriptionDate'] ??= '',
         telegramNick = map['telegramNick'] ??= '',
-        botChatId = map['botChatId'] ??= '',
+        botChatId = _convertToString(map['botChatId']),
         email = map['email'] ??= '',
         phone = _convertToString(map['phone']),
         contract = _convertToString(map['contract']),
