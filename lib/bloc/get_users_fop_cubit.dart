@@ -23,8 +23,10 @@ class GetUsersFopCubit extends Cubit<GetUsersFopState> {
       emitGetUsersFopLoading();
       final List<UserEntity> listUsers =
       await GetUsersFopRepositoryModule.getUsersFopRepository().getUsersFop();
-
-      emitGetUsersFopLoaded(listUsers);
+      final List<UserEntity> listUsersSortedByDate = listUsers;
+      //sort users by lastSubscription date;
+      listUsersSortedByDate.sort((a,b) =>a.lastSubscriptionDate!.compareTo(b.lastSubscriptionDate!));
+      emitGetUsersFopLoaded(listUsersSortedByDate);
     } catch (e) {
       emitGetUsersFopError(e.toString());
       logger.e(e, [e, StackTrace]);

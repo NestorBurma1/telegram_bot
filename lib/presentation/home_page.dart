@@ -4,6 +4,8 @@ import 'package:telegram_bot/bloc/get_users_fop_cubit.dart';
 import 'package:telegram_bot/data/services/send_message_telegram.dart';
 import 'package:telegram_bot/domain/user_entity.dart';
 
+import 'home_page_widgets/list_view_users.dart';
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
 
@@ -43,41 +45,17 @@ class _MyHomePageState extends State<MyHomePage> {
                     if (state is GetUsersFopLoading) {
                       return (const CircularProgressIndicator());
                     } else if (state is GetUsersFopLoaded) {
-                      List<UserEntity> _listUserEntity = state.listUsersEntity;
+                      final List<UserEntity> _listUserEntity =
+                          state.listUsersEntity;
                       return SizedBox(
                         width: MediaQuery.of(context).size.width - 100,
                         height: MediaQuery.of(context).size.height - 100,
                         child: Row(
                           children: [
                             Expanded(
-                              flex :1,
-                              child: ListView.builder(
-                                itemCount: _listUserEntity.length,
-                                itemBuilder: (BuildContext context, int i) {
-                                  return SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width - 100,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          _listUserEntity[i].userName!,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .subtitle1!
-                                              .copyWith(color: Colors.green),
-                                        ),
-                                        Text(
-                                          _listUserEntity[i]
-                                              .lastSubscriptionDate
-                                              .toString(),
-                                        )
-                                      ],
-                                    ),
-                                  );
-                                },
-                              ),
+                              flex: 1,
+                              child: ListViewUsers(
+                                  listUserEntity: _listUserEntity),
                             ),
                             Expanded(
                               flex: 1,
@@ -85,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 child: SizedBox(
                                   width: 500,
                                   child: Column(
-                                    mainAxisAlignment:  MainAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       const Text('Type your message here'),
                                       TextField(
@@ -99,11 +77,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                         child: TextButton(
                                             child: const Text(
                                               'Send message',
-                                              style:
-                                                  TextStyle(color: Colors.white),
+                                              style: TextStyle(
+                                                  color: Colors.white),
                                             ),
                                             onPressed: () async => {
-                                                  if (_controller.text.isNotEmpty)
+                                                  if (_controller
+                                                      .text.isNotEmpty)
                                                     {
                                                       await TelegramApi()
                                                           .postRequest(
@@ -134,3 +113,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
