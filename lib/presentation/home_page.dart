@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:telegram_bot/bloc/get_users_fop_cubit.dart';
+import 'package:telegram_bot/bloc/get_users_fop_cubit/get_users_fop_cubit.dart';
+import 'package:telegram_bot/bloc/send_message_subscription_expire_at/send_message_subscription_expire_cubit.dart';
 import 'package:telegram_bot/data/services/send_message_telegram.dart';
 import 'package:telegram_bot/domain/user_entity.dart';
+import 'package:telegram_bot/presentation/home_page_widgets/checkbox_widget.dart';
 
 import 'home_page_widgets/list_view_users.dart';
 
@@ -22,7 +24,7 @@ void dispose() {
   _controller.dispose();
   dispose();
 }
-
+const int _daysExpire = 6;
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
@@ -55,6 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             Expanded(
                               flex: 1,
                               child: ListViewUsers(
+                                daysExpire: _daysExpire,
                                   listUserEntity: _listUserEntity),
                             ),
                             Expanded(
@@ -65,6 +68,50 @@ class _MyHomePageState extends State<MyHomePage> {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
+                                      BlocBuilder<
+                                              SendMessageSubscriptionExpireCubit,
+                                              SendMessageSubscriptionExpireState>(
+                                          bloc:
+                                              SendMessageSubscriptionExpireCubit(
+                                                  _listUserEntity)
+                                                ..emitShowList(daysExpire: _daysExpire),
+                                          builder: (context, state) {
+                                            if (state
+                                                is SendMessageSubscriptionExpireShowList) {
+                                              return Expanded(
+                                                child: ListView.builder(
+                                                    controller:
+                                                        ScrollController(),
+                                                    itemCount:
+                                                        state.list.length,
+                                                    itemBuilder:
+                                                        (BuildContext context,
+                                                            int i) {
+                                                      return Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text(state
+                                                              .list[i].userName
+                                                              .toString()),
+                                                          Text(
+                                                            state.list[i]
+                                                                .botChatId
+                                                                .toString(),
+                                                          ),
+                                                          CheckBoxWidget(
+                                                            checked: state
+                                                                .markedToSendMessage[i],
+                                                          ),
+                                                        ],
+                                                      );
+                                                    }),
+                                              );
+                                            } else {
+                                              return Text('');
+                                            }
+                                          }),
                                       const Text('Type your message here'),
                                       TextField(
                                         controller: _controller,
@@ -113,4 +160,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-

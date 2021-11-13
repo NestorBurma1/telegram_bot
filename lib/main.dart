@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:telegram_bot/bloc/get_users_fop_cubit.dart';
+import 'package:telegram_bot/bloc/get_users_fop_cubit/get_users_fop_cubit.dart';
 
 import 'package:telegram_bot/presentation/home_page.dart';
 

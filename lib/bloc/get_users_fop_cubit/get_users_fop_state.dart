@@ -3,7 +3,11 @@ part of 'get_users_fop_cubit.dart';
 @immutable
 abstract class GetUsersFopState {}
 
-class GetUsersFopInitial extends GetUsersFopState {}
+class GetUsersFopInitial extends Equatable implements GetUsersFopState {
+  const GetUsersFopInitial();
+  @override
+  List<Object> get props => [];
+}
 
 class GetUsersFopLoading extends Equatable implements GetUsersFopState {
   const GetUsersFopLoading();

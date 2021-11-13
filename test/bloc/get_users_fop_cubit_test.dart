@@ -1,5 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:telegram_bot/bloc/get_users_fop_cubit.dart';
+import 'package:telegram_bot/bloc/get_users_fop_cubit/get_users_fop_cubit.dart';
 import 'package:telegram_bot/domain/user_entity.dart';
 
 void main() {
