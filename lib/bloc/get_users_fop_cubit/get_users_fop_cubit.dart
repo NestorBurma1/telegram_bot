@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:telegram_bot/domain/user_entity.dart';
 import 'package:telegram_bot/internal/dependencies/get_users_fop_repository_module.dart';
-import 'package:telegram_bot/logger_print.dart';
-
 
 part 'get_users_fop_state.dart';
 
@@ -53,10 +51,10 @@ class GetUsersFopCubit extends Cubit<GetUsersFopState> {
       if (returnedList[i - 1].userName == returnedList[i].userName) {
         if (returnedList[i - 1].lastSubscriptionDate!.difference(DateTime.now()) >
             returnedList[i].lastSubscriptionDate!.difference(DateTime.now())) {
-          LoggerPrint.logger.i(returnedList[i]);
+
           returnedList.removeAt(i);
         } else {
-          LoggerPrint.logger.e(returnedList[i-1]);
+
           returnedList.removeAt(i-1);
         }
         i = 1;

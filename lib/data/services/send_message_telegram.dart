@@ -34,7 +34,6 @@ class TelegramApi {
         headers: {'Content-type': 'application/json','Accept': 'application/json'},
         body: body,
       );
-     print(response.statusCode);
       return json.decode(response.body);
     }
     catch (e){
