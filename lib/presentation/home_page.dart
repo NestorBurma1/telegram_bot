@@ -24,7 +24,7 @@ void dispose() {
   _controller.dispose();
   dispose();
 }
-const int _daysExpire = 6;
+const int _daysExpire = 10;
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {

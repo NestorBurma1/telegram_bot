@@ -15,7 +15,7 @@ class SendMessageSubscriptionExpireCubit
 
   void emitShowList({required int daysExpire}) {
     final Iterable<UserEntity> listUsersExpire = state.list.where((element) =>
-        (element.lastSubscriptionDate!.difference(DateTime.now()).inDays <
+        (element.lastSubscriptionDate!.difference(DateTime.now()).inDays <=
         daysExpire));
 
     emitSendMessageSubscriptionExpireShowLis(listUsersExpire.toList(),
