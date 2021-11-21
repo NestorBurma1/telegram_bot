@@ -7,16 +7,16 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
-  bloc: ^7.2.1
-  bloc_test: ^8.5.0
+  bloc: ^8.0.1
+  bloc_test: ^9.0.1
   dartx: ^0.8.0
-  dio: ^4.0.1
+  dio: ^4.0.3
   equatable: ^2.0.3
   flutter:
     sdk: flutter
 
-  flutter_bloc: ^7.3.3
-  freezed: ^0.15.1+1
+  flutter_bloc: ^8.0.0
+  freezed: ^1.0.0
   http: ^0.13.4
   logger: ^1.1.0
   teledart: ^0.2.1

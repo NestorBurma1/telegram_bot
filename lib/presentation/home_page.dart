@@ -17,14 +17,21 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-late TextEditingController _controller = TextEditingController();
+late TextEditingController _controllerForMessage = TextEditingController();
+late TextEditingController _controllerForDays =
+    TextEditingController(text: '1');
+
+late List<UserEntity> _listUsersForMessage = [];
 
 @override
 void dispose() {
-  _controller.dispose();
+  _controllerForMessage.dispose();
+  _controllerForDays.dispose();
   dispose();
 }
-const int _daysExpire = 10;
+
+int _daysExpire = int.parse(_controllerForDays.text);
+
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
@@ -41,6 +48,28 @@ class _MyHomePageState extends State<MyHomePage> {
               style: Theme.of(context).textTheme.headline4,
             ),
             Center(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text('Type here days subscription expires'),
+                  SizedBox(
+                    width: 100,
+                    child: TextField(
+                        autofocus: true,
+                        controller: _controllerForDays,
+                        onChanged: (el) => setState(() {
+                              try {
+                                _daysExpire =
+                                    int.parse(_controllerForDays.text);
+                              } catch (e) {
+                                _daysExpire = 1;
+                              }
+                            })),
+                  ),
+                ],
+              ),
+            ),
+            Center(
               child: BlocBuilder<GetUsersFopCubit, GetUsersFopState>(
                   bloc: context.read<GetUsersFopCubit>(),
                   builder: (context, state) {
@@ -51,13 +80,13 @@ class _MyHomePageState extends State<MyHomePage> {
                           state.listUsersEntity;
                       return SizedBox(
                         width: MediaQuery.of(context).size.width - 100,
-                        height: MediaQuery.of(context).size.height - 100,
+                        height: MediaQuery.of(context).size.height - 150,
                         child: Row(
                           children: [
                             Expanded(
                               flex: 1,
                               child: ListViewUsers(
-                                daysExpire: _daysExpire,
+                                  daysExpire: _daysExpire,
                                   listUserEntity: _listUserEntity),
                             ),
                             Expanded(
@@ -74,10 +103,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                           bloc:
                                               SendMessageSubscriptionExpireCubit(
                                                   _listUserEntity)
-                                                ..emitShowList(daysExpire: _daysExpire),
+                                                ..emitShowList(
+                                                    daysExpire: _daysExpire),
                                           builder: (context, state) {
                                             if (state
                                                 is SendMessageSubscriptionExpireShowList) {
+                                              _listUsersForMessage = state.list;
                                               return Expanded(
                                                 child: ListView.builder(
                                                     controller:
@@ -114,7 +145,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                           }),
                                       const Text('Type your message here'),
                                       TextField(
-                                        controller: _controller,
+                                        controller: _controllerForMessage,
                                       ),
                                       const SizedBox(
                                         height: 10.0,
@@ -128,14 +159,21 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   color: Colors.white),
                                             ),
                                             onPressed: () async => {
-                                                  if (_controller
+                                                  if (_controllerForMessage
                                                       .text.isNotEmpty)
                                                     {
-                                                      await TelegramApi()
-                                                          .postRequest(
-                                                              _listUserEntity[0]
-                                                                  .botChatId!,
-                                                              _controller.text)
+                                                      _listUsersForMessage.forEach(
+                                                          (element) async {
+                                                        if (element.botChatId!
+                                                            .isNotEmpty) {
+                                                          await TelegramApi()
+                                                              .postRequest(
+                                                                  element
+                                                                      .botChatId!,
+                                                                  _controllerForMessage
+                                                                      .text);
+                                                        }
+                                                      })
                                                     }
                                                 }),
                                       )
