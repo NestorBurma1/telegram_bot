@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:telegram_bot/bloc/get_users_fop_cubit/get_users_fop_cubit.dart';
 import 'package:telegram_bot/bloc/send_message_subscription_expire_at/send_message_subscription_expire_cubit.dart';
-import 'package:telegram_bot/data/services/send_message_telegram.dart';
+import 'package:telegram_bot/data/services/telegarm_api_command.dart';
 import 'package:telegram_bot/domain/user_entity.dart';
 import 'package:telegram_bot/presentation/home_page_widgets/checkbox_widget.dart';
 
@@ -38,6 +38,16 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+      ),
+      drawer: Container(
+        width: 200,
+        color: Colors.white,
+        child: Column(
+          children: [
+            TextButton(
+                onPressed: () async => await TelegramApiCommand().messagePostRequest('216464543'), child: const Text('Меню'))
+          ],
+        ),
       ),
       body: Center(
         child: Column(
@@ -162,12 +172,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   if (_controllerForMessage
                                                       .text.isNotEmpty)
                                                     {
-                                                      _listUsersForMessage.forEach(
-                                                          (element) async {
+                                                      _listUsersForMessage
+                                                          .forEach(
+                                                              (element) async {
                                                         if (element.botChatId!
                                                             .isNotEmpty) {
-                                                          await TelegramApi()
-                                                              .postRequest(
+                                                          await TelegramApiCommand()
+                                                              .sendMessagePostRequest(
                                                                   element
                                                                       .botChatId!,
                                                                   _controllerForMessage
